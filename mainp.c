@@ -236,24 +236,38 @@ void modifDead(){
 
 //Suprimer une tache
 void suprimer(){
-    printf("\nVeuillez saisir ID de la tache que vous voullez suprimer");
+    printf("\nVeuillez saisir ID de la tache que vous voullez suprimer\n");
+
     int idS,check = 0;
     int j;
     scanf("%d", &idS);
-    for (int i = 0; i < size; i++)
+    printf("\nVous comfirmer la Suppression (1 : Oui / 2 : Non)\n");
+    int supverif;
+    scanf("%d",&supverif);
+    switch (supverif)
     {
-        if(t[i].id == idS){
-          int j = i;
-          //check = 1;
-          for (int k = j; k < size - 1; k++){
+    case 1:
+        
+        for (int i = 0; i < size; i++)
+        {
+            if(t[i].id == idS){
+                int j = i;
+                //check = 1;
+                for (int k = j; k < size - 1; k++){
                 t[i] = t[k+1];
                 i++;
             }
-            size--;
-            
+            size--;            
         }
+        }
+        break;
+    case 2:
+        printf("\nSuppression annulee");
+        break;
+    default:
+        break;
     }
-    
+   
 
 
 }
@@ -342,10 +356,31 @@ void rechT(){
         }
 }
 
+//Statistique----------------------------------------------------------------------------------------------
+
 void totalTache(){
     printf("\nle nombre total des taches est : %d\n",size);
 
 }
+
+void competomcop(){
+    int com = 0,incom = 0;
+    for (int i = 0; i < size; i++)
+    {
+        if (t[i].status == 3)
+        {
+            com++;
+        }
+        if (t[i].status == 1 || t[i].status == 2)
+        {
+            incom++;
+        }        
+    }
+    printf("le nombre de taches completes est %d\n",com);
+    printf("le nombre de taches incompletes est %d\n",incom);
+
+}
+
 
 
 //Fontion menu-------------------------------------------------------------------------------------------------------------
@@ -419,6 +454,55 @@ void modifm(){
     
 }
 
+//menu-recherche
+
+void rechMenu(){
+     int choixRech;
+    printf("\n\t1 :Rechercher une tache par son Identifiant \n\t2 : Rechercher une tache par son Titre \n\t0 : Retour\n\n");
+    printf("Vous souhaitez : ");
+    scanf("%d",&choixRech);
+    switch (choixRech)
+    {
+    case 1:
+        rechId();
+        break;
+    case 2:
+        rechT();
+        break;
+    
+    default:
+        break;
+    }
+
+}
+
+
+//stattistique-MENU
+
+void statistique_menu(){
+    int choixstat;
+    printf("\n\t1 : Afficher le nombre total des taches\n\t2 : Afficher le nombre de taches completes et incompletes \n\t3 : Afficher le nombre de jours restants jusqu'au delai de chaque tache\n\t0 : Retour\n\n");
+    printf("Vous souhaitez : ");
+    scanf("%d",&choixstat);
+    switch (choixstat)
+    {
+    case 1:
+        totalTache();
+        
+        break;
+    case 2 :
+        competomcop();
+        break;
+    case 3:
+        //code
+        break;
+    
+    default:
+        break;
+    }
+    
+}
+
 
     
     
@@ -445,7 +529,7 @@ int main(){
 
     printf("------------------MENU--------------------\n\n");
 
-    printf("\t1 : Ajouter une tache\n\t2 : Afficher la liste de toutes les taches\n\t3 : Modifier une tache\n\t4 : Supprimer une tache par identifiant\n\t5 : Rechercher les Taches\n\t0 : Quitter\n\n");
+    printf("\t1 : Ajouter une tache\n\t2 : Afficher la liste de toutes les taches\n\t3 : Modifier une tache\n\t4 : Supprimer une tache par identifiant\n\t5 : Rechercher les Taches\n\t6 : Statistiques\n\t0 : Quitter\n\n");
     printf("Vous souhaitez : ");
     scanf("%d",&choix);
     switch (choix)
@@ -464,8 +548,10 @@ int main(){
         affichage();
         break;
     case 5:
-        /* code */
+        rechMenu();
         break;
+    case 6:
+        statistique_menu();
     
     default:
         break;
