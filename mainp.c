@@ -3,7 +3,7 @@
 #include<string.h>
 #include <time.h> 
 ////////////////////////////////////////////////////
-int size = 0 ,c;
+int size = 0;
 
 
 
@@ -381,6 +381,10 @@ void competomcop(){
 
 }
 
+void deadline_diff(){
+
+}
+
 
 
 //Fontion menu-------------------------------------------------------------------------------------------------------------
@@ -419,7 +423,7 @@ void affichem(){
                 affichage();
                 break;
             case 3:
-                //3 mois OU 3 jour
+                deadline_3();
             default:
                 
                 break;
@@ -494,7 +498,7 @@ void statistique_menu(){
         competomcop();
         break;
     case 3:
-        //code
+        deadline_jours_restant();
         break;
     
     default:
@@ -503,6 +507,99 @@ void statistique_menu(){
     
 }
 
+
+//date fonction--------------------------------------------------------------------------------------
+void deadline_3 () { 
+
+    int tempdeadlinejour ,tempdeadlinemonth,tempdeadlineyear;
+    int datetoday=22,monthtoday= 9,yeartoday=2023;
+    printf("---------------------------------- ----------------------------\nId\tTitre\tDesc\t\tdeadline\tStatus\n--------------------------------------------------------------");
+
+    for(int i=0;i<size;i++){
+        tempdeadlinejour = t[i].d.j;
+        tempdeadlinemonth = t[i].d.m;
+        tempdeadlineyear = t[i].d.a;
+
+
+        int diff_jour=(tempdeadlineyear-yeartoday)*365 + 
+                        (tempdeadlinemonth-monthtoday) *30 + 
+                        (tempdeadlinejour-datetoday);
+
+        if (diff_jour<=3 && diff_jour>0){
+            char s[13] = "a realiser";
+            char s1[29] = "en cours de realisation";
+            char s2[13] = "finalisee";
+            char sf[29];
+            switch (t[i].status)
+            {
+                case 1:
+                    strcpy(sf,s);
+                    break;
+                case 2:
+                    strcpy(sf,s1);
+                    break;
+                case 3:
+                    strcpy(sf,s2);
+                    break;
+        
+                default:
+                    break;
+        }
+
+        printf("\n%d\t%s\t%s\t\t%d/%d/%d\t%s\n--------------------------------------------------------------"
+        ,t[i].id,t[i].titre,t[i].desc,t[i].d.j,t[i].d.m,t[i].d.a,sf);
+    }
+        }
+
+
+    }
+
+
+//jours restatnt
+void deadline_jours_restant () { 
+
+    int tempdeadlinejour ,tempdeadlinemonth,tempdeadlineyear;
+    int datetoday=22,monthtoday= 9,yeartoday=2023;
+    printf("---------------------------------- ----------------------------\nId\tTitre\tDesc\t\tdeadline\tStatus\tJours restant\n--------------------------------------------------------------");
+
+    for(int i=0;i<size;i++){
+        tempdeadlinejour = t[i].d.j;
+        tempdeadlinemonth = t[i].d.m;
+        tempdeadlineyear = t[i].d.a;
+
+
+        int diff_jour=(tempdeadlineyear-yeartoday)*365 + 
+                        (tempdeadlinemonth-monthtoday) *30 + 
+                        (tempdeadlinejour-datetoday);
+
+        
+            char s[13] = "a realiser";
+            char s1[29] = "en cours de realisation";
+            char s2[13] = "finalisee";
+            char sf[29];
+            switch (t[i].status)
+            {
+                case 1:
+                    strcpy(sf,s);
+                    break;
+                case 2:
+                    strcpy(sf,s1);
+                    break;
+                case 3:
+                    strcpy(sf,s2);
+                    break;
+        
+                default:
+                    break;
+        }
+
+        printf("\n%d\t%s\t%s\t\t%d/%d/%d\t%s\t%d Jours\n--------------------------------------------------------------"
+        ,t[i].id,t[i].titre,t[i].desc,t[i].d.j,t[i].d.m,t[i].d.a,sf,diff_jour);
+    
+        }
+
+
+    }
 
     
     
@@ -524,11 +621,8 @@ void statistique_menu(){
 int main(){
     int choix;
     do{
-
    printf("\n\n----------Gestion de Taches ToDo----------\n");
-
     printf("------------------MENU--------------------\n\n");
-
     printf("\t1 : Ajouter une tache\n\t2 : Afficher la liste de toutes les taches\n\t3 : Modifier une tache\n\t4 : Supprimer une tache par identifiant\n\t5 : Rechercher les Taches\n\t6 : Statistiques\n\t0 : Quitter\n\n");
     printf("Vous souhaitez : ");
     scanf("%d",&choix);
@@ -556,11 +650,5 @@ int main(){
     default:
         break;
     }
-
-
-    }while (choix != 0);
-    
-        
-    
-    
+    }while (choix != 0);    
 }
